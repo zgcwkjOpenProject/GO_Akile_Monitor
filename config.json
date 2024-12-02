@@ -1,6 +1,6 @@
 {
   "auth_secret": "auth_secret",
-  "url": ":3000",
+  "listen": ":3000",
   "enable_tg": false,
   "tg_token": "telegram_bot_token"
 }
