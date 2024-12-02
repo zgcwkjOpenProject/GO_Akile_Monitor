@@ -74,6 +74,7 @@ WantedBy=multi-user.target
 
 EOF
 ```
+复制配置文件到/etc/ak_monitor/client.json并配置文件
 
 ```
 启动
