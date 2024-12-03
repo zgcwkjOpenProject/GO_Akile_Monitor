@@ -9,7 +9,7 @@
 ```
 mkdir /etc/ak_monitor/
 cd /etc/ak_monitor/
-wget -O ak_monitor https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/ak_monitor
+wget -O ak_monitor https://github.com/akile-network/akile_monitor/releases/download/v0.01/akile_monitor-linux-amd64
 chmod 777 ak_monitor
 
 cat > /etc/systemd/system/ak_monitor.service <<EOF
@@ -45,6 +45,8 @@ EOF
 systemctl start ak_monitor
 关闭
 systemctl stop ak_monitor
+开机自启
+systemctl enable ak_monitor
 ```
 
 
@@ -52,7 +54,7 @@ systemctl stop ak_monitor
 ```
 mkdir /etc/ak_monitor/
 cd /etc/ak_monitor/
-wget -O client https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/client/client
+wget -O client https://github.com/akile-network/akile_monitor/releases/download/v0.01/akile_client-linux-amd64
 chmod 777 client
 
 cat > /etc/systemd/system/ak_client.service <<EOF
@@ -86,6 +88,8 @@ EOF
 systemctl start ak_client
 关闭
 systemctl stop ak_client
+开机自启
+systemctl enable ak_client
 ```
 
 
