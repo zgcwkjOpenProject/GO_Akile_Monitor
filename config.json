@@ -1,6 +1,10 @@
 {
   "auth_secret": "auth_secret",
   "listen": ":3000",
-  "enable_tg": false,
-  "tg_token": "telegram_bot_token"
+  "enable_tg": true,
+  "tg_token": "your_telegram_bot_token",
+  "hook_uri": "/hook",
+  "update_uri": "/monitor",
+  "web_uri": "/ws",
+  "hook_token": "hook_token"
 }
