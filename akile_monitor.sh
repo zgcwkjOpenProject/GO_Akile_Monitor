@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ak_monitor 安装与管理脚本
+set -x  # 开启调试模式，查看脚本执行过程
 
 INSTALL_DIR="/etc/ak_monitor"
 SERVICE_NAME="ak_monitor"
@@ -81,6 +81,10 @@ menu() {
   echo "4. 停止 ak_monitor"
   echo "5. 退出"
   echo "------------------------"
+  
+  # 添加调试输出，查看脚本是否到达此行
+  echo "等待输入..."
+  
   read -p "请选择操作 (1-5): " choice
 
   case $choice in
