@@ -25,7 +25,7 @@ jobs:
       run: go build
 
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: go-build-artifact
         path: ./akile_monitor # Replace with your actual binary file name
