@@ -8,23 +8,24 @@
 ```
 wget -O ak-setup.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/ak-setup.sh" && chmod +x ak-setup.sh && sudo ./ak-setup.sh
 ```
-![image](https://github.com/user-attachments/assets/43379572-4f24-4e7e-9972-f5452c322640)
+![image](https://github.com/user-attachments/assets/58b9209b-a327-4783-b9dd-4e0dc2ecbf7e)
+
 
 
 ## 主控后端
 
 ```
-wget -O setup-monitor.sh "https://raw.githubusercontent.com/akile-network/ak_monitor/refs/heads/main/setup-monitor.sh" && chmod +x setup-monitor.sh && sudo ./setup-monitor.sh
+wget -O setup-monitor.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-monitor.sh" && chmod +x setup-monitor.sh && sudo ./setup-monitor.sh
 ```
 
 ## 被控端
 
 ```
-wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/ak_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh <your_secret> <url> <name>
+wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh <your_secret> <url> <name>
 ```
 如
 ```
-wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/ak_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh 123321 wss://123.321.123.321/monitor HKLite-One-Akile
+wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh 123321 wss://123.321.123.321/monitor HKLite-One-Akile
 ```
 
 ## 主控前端部署教程(cf pages)
