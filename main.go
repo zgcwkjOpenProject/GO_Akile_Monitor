@@ -239,6 +239,10 @@ func fetchData() []byte {
 
 // 定义一个函数来比较两个带字母和数字的字符串
 func compareStrings(str1, str2 string) int {
+	//先去除空格
+	str1 = regexp.MustCompile(`\s+`).ReplaceAllString(str1, "")
+	str2 = regexp.MustCompile(`\s+`).ReplaceAllString(str2, "")
+
 	// 使用正则表达式提取字母和数字部分
 	re := regexp.MustCompile(`([a-zA-Z]+)(\d*)`)
 	matches1 := re.FindStringSubmatch(str1)
