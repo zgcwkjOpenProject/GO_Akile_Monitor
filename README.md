@@ -6,7 +6,7 @@
 ## 前后端集合一键脚本
 
 ```
-wget -O ak-setup.sh "https://raw.githubusercontent.com/akile-network/ak_monitor/refs/heads/main/ak-setup.sh" && chmod +x ak-setup.sh && sudo ./ak-setup.sh
+wget -O ak-setup.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/ak-setup.sh" && chmod +x ak-setup.sh && sudo ./ak-setup.sh
 ```
 ![image](https://github.com/user-attachments/assets/43379572-4f24-4e7e-9972-f5452c322640)
 
