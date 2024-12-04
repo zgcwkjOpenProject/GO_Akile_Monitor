@@ -5,12 +5,14 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
+	"fmt"
 	"github.com/cloudwego/hertz/pkg/common/json"
 	"io"
 	"log"
 	"regexp"
 	"sort"
 	"strconv"
+	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -102,11 +104,40 @@ func monitor(_ context.Context, c *app.RequestContext) {
 	}
 }
 
+var offline = make(map[string]bool)
+
 func main() {
 	LoadConfig()
 	initDb()
 	if cfg.EnableTG {
 		go startbot()
+	}
+
+	if cfg.TgChatID != 0 {
+		go func() {
+			for {
+				var mm []M
+				data := fetchData()
+				json.Unmarshal(data, &mm)
+				for _, v := range mm {
+					if v.TimeStamp < time.Now().Unix()-30 {
+						if !offline[v.Host.Name] {
+							offline[v.Host.Name] = true
+							msg := fmt.Sprintf("❌ %s 离线了", v.Host.Name)
+							SendTGMessage(msg)
+						}
+					} else {
+						if offline[v.Host.Name] {
+							offline[v.Host.Name] = false
+							msg := fmt.Sprintf("✅ %s 上线了", v.Host.Name)
+							SendTGMessage(msg)
+						}
+					}
+				}
+				time.Sleep(time.Second * 10)
+
+			}
+		}()
 	}
 	h := server.Default(server.WithHostPorts(cfg.Listen))
 	config := cors.DefaultConfig()

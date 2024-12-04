@@ -138,3 +138,18 @@ func formatSize(size uint64) string {
 		return fmt.Sprintf("%.2f EB", float64(size)/1024/1024/1024/1024/1024/1024)
 	}
 }
+
+func SendTGMessage(msg string) {
+	bot, err := tgbotapi.NewBotAPI(cfg.TgToken)
+	if err != nil {
+		log.Println("Error creating bot", err)
+		return
+	}
+
+	bot.Debug = false
+
+	log.Printf("Authorized on account %s", bot.Self.UserName)
+
+	msgs := tgbotapi.NewMessage(cfg.TgChatID, msg)
+	bot.Send(msgs)
+}
