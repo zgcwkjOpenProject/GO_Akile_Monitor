@@ -15,7 +15,7 @@ wget -O ak-setup.sh "https://raw.githubusercontent.com/akile-network/akile_monit
 ## 主控后端
 
 ```
-wget -O setup-monitor.sh "https://raw.githubusercontent.com/akile-network/ak_monitor/refs/heads/main/setup-monitor.sh" && chmod +x setup-monitor.sh && sudo ./setup-monitor.sh
+wget -O setup-monitor.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-monitor.sh" && chmod +x setup-monitor.sh && sudo ./setup-monitor.sh
 ```
 
 ## 被控端
