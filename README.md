@@ -1,3 +1,8 @@
+# Akile Monitor
+
+![预览图](https://github.com/akile-network/akile_monitor/blob/main/akile_monitor.jpg?raw=true)
+前端项目地址 https://github.com/akile-network/akile_monitor_fe
+
 ## 前后端集合一键脚本
 
 ```
