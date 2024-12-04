@@ -35,7 +35,11 @@ type M struct {
 var db *gorm.DB
 
 func initDb() {
-	Db, err := gorm.Open(sqlite.Open("ak_monitor.db"), &gorm.Config{})
+	var dbfile = "file::memory:?cache=shared"
+	if cfg.EnableFileDb {
+		dbfile = "ak_monitor.db"
+	}
+	Db, err := gorm.Open(sqlite.Open(dbfile), &gorm.Config{})
 	if err != nil {
 		log.Panic(err)
 	}
