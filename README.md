@@ -21,11 +21,11 @@ wget -O setup-monitor.sh "https://raw.githubusercontent.com/akile-network/akile_
 ## 被控端
 
 ```
-wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/ak_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh <your_secret> <url> <name>
+wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh <your_secret> <url> <name>
 ```
 如
 ```
-wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/ak_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh 123321 wss://123.321.123.321/monitor HKLite-One-Akile
+wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-client.sh" && chmod +x setup-client.sh && sudo ./setup-client.sh 123321 wss://123.321.123.321/monitor HKLite-One-Akile
 ```
 
 ## 主控前端部署教程(cf pages)
