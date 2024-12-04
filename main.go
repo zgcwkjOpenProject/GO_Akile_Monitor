@@ -48,6 +48,7 @@ var upgrader = websocket.HertzUpgrader{
 	CheckOrigin: func(r *app.RequestContext) bool {
 		return true // 允许所有跨域请求
 	},
+	EnableCompression: true,
 } // use default options
 
 func monitor(_ context.Context, c *app.RequestContext) {
