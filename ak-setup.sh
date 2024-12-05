@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 function install_monitor() {
- wget -O setup-monitor.sh "https://raw.githubusercontent.com/KunBuFenZi/ak-monitor/refs/heads/main/setup-monitor.sh"
+ wget -O setup-monitor.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-monitor.sh"
  chmod +x setup-monitor.sh
  ./setup-monitor.sh
 }
@@ -32,7 +32,7 @@ function install_client() {
  read -p "Enter auth_secret: " auth_secret
  read -p "Enter URL: " url
  read -p "Enter name: " name
- wget -O setup-client.sh "https://raw.githubusercontent.com/KunBuFenZi/ak-monitor/refs/heads/main/setup-client.sh"
+ wget -O setup-client.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-client.sh"
  chmod +x setup-client.sh
  ./setup-client.sh "$auth_secret" "$url" "$name"
 }
