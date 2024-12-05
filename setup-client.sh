@@ -153,7 +153,7 @@ LimitNOFILE=999999999
 WorkingDirectory=/etc/ak_monitor/
 ExecStart=/etc/ak_monitor/client
 Restart=always
-RestartSec=10
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target
