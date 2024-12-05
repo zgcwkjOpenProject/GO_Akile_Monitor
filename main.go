@@ -33,12 +33,10 @@ type M struct {
 }
 
 var db *gorm.DB
+var filedb *gorm.DB
 
 func initDb() {
 	var dbfile = "file::memory:?cache=shared"
-	if cfg.EnableFileDb {
-		dbfile = "ak_monitor.db"
-	}
 	Db, err := gorm.Open(sqlite.Open(dbfile), &gorm.Config{})
 	if err != nil {
 		log.Panic(err)
@@ -46,6 +44,25 @@ func initDb() {
 
 	Db.AutoMigrate(&Data{})
 	db = Db
+}
+
+func initFileDb() {
+	var dbfile = "ak_monitor.db"
+	Db, err := gorm.Open(sqlite.Open(dbfile), &gorm.Config{})
+	if err != nil {
+		log.Panic(err)
+	}
+
+	Db.AutoMigrate(&Host{})
+	filedb = Db
+}
+
+type Host struct {
+	Name    string `json:"name" gorm:"primaryKey"`
+	DueTime int64  `json:"due_time"` // 到期时间
+	BuyUrl  string `json:"buy_url"`  // 购买链接
+	Seller  string `json:"seller"`   // 卖家
+	Price   string `json:"price"`    // 价格
 }
 
 var upgrader = websocket.HertzUpgrader{
@@ -114,6 +131,7 @@ var offline = make(map[string]bool)
 func main() {
 	LoadConfig()
 	initDb()
+	initFileDb()
 	if cfg.EnableTG {
 		go startbot()
 	}
@@ -125,7 +143,8 @@ func main() {
 				data := fetchData()
 				json.Unmarshal(data, &mm)
 				for _, v := range mm {
-					if v.TimeStamp < time.Now().Unix()-30 {
+					// 30秒内离线
+					if v.TimeStamp < time.Now().Unix()-60 {
 						if !offline[v.Host.Name] {
 							offline[v.Host.Name] = true
 							msg := fmt.Sprintf("❌ %s 离线了", v.Host.Name)
@@ -147,9 +166,10 @@ func main() {
 	h := server.Default(server.WithHostPorts(cfg.Listen))
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
-
 	h.Use(cors.New(config))
 	h.NoHijackConnPool = true
+	h.GET("/info", Info)
+	h.POST("/info", UpdateInfo)
 	h.GET(cfg.UpdateUri, monitor)
 	h.GET(cfg.WebUri, ws)
 	h.GET(cfg.HookUri, Hook)
@@ -165,6 +185,48 @@ func Hook(_ context.Context, c *app.RequestContext) {
 	}
 	data := fetchData()
 	c.JSON(200, data)
+}
+
+func Info(_ context.Context, c *app.RequestContext) {
+	var ret []*Host
+	err := filedb.Model(&Host{}).Find(&ret).Error
+	if err != nil {
+		log.Println(err)
+		c.JSON(200, "[]")
+		return
+	}
+	c.JSON(200, ret)
+}
+
+type UpdateRequest struct {
+	AuthSecret string `json:"auth_secret"`
+	Host
+}
+
+func UpdateInfo(_ context.Context, c *app.RequestContext) {
+	var ret UpdateRequest
+	err := c.BindJSON(&ret)
+	if err != nil {
+		c.JSON(400, "bad request")
+		return
+	}
+
+	if ret.AuthSecret != cfg.AuthSecret {
+		c.JSON(401, "auth failed")
+		return
+	}
+
+	var h Host
+
+	filedb.Model(&Host{}).Where("name = ?", ret.Name).First(&h)
+	if h.Name == "" {
+		h = ret.Host
+		filedb.Model(&Host{}).Create(&h)
+	} else {
+		h = ret.Host
+		filedb.Model(&Host{}).Where("name = ?", ret.Name).Updates(&h)
+	}
+	c.JSON(200, "ok")
 }
 
 type DeleteHostRequest struct {
