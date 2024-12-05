@@ -2,6 +2,8 @@
 
 ![预览图](https://github.com/akile-network/akile_monitor/blob/main/akile-monitor-cover.jpg?raw=true)
 Demo https://cpu.icu
+
+
 前端项目地址 https://github.com/akile-network/akile_monitor_fe
 
 ## 前后端集合一键脚本
