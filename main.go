@@ -224,7 +224,7 @@ func UpdateInfo(_ context.Context, c *app.RequestContext) {
 		filedb.Model(&Host{}).Create(&h)
 	} else {
 		h = ret.Host
-		filedb.Model(&Host{}).Where("name = ?", ret.Name).Updates(&h)
+		filedb.Model(&Host{}).Where("name = ?", ret.Name).Save(&h)
 	}
 	c.JSON(200, "ok")
 }
