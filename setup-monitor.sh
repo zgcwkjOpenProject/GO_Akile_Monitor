@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
     echo "Please run as root"
@@ -63,17 +62,19 @@ read -p "Enter listen port (default :3000): " listen
 listen=${listen:-":3000"}
 read -p "Enter hook_token: " hook_token
 
-# Get enable_tg choice
+# Get enable_tg choice and related information
 while true; do
     read -p "Enable Telegram notifications? (y/n): " enable_tg_choice
     case $enable_tg_choice in
         [Yy]* ) 
             enable_tg=true
             read -p "Enter Telegram bot token: " tg_token
+            read -p "Enter Telegram chat ID: " tg_chat_id
             break;;
         [Nn]* ) 
             enable_tg=false
             tg_token="your_telegram_bot_token"
+            tg_chat_id=0
             break;;
         * ) echo "Please answer y or n.";;
     esac
@@ -89,7 +90,8 @@ cat > /etc/ak_monitor/config.json <<EOF
   "hook_uri": "/hook",
   "update_uri": "/monitor",
   "web_uri": "/ws",
-  "hook_token": "${hook_token}"
+  "hook_token": "${hook_token}",
+  "tg_chat_id": ${tg_chat_id}
 }
 EOF
 
