@@ -4,6 +4,12 @@ if [ "$EUID" -ne 0 ]; then
  exit 1
 fi
 
+function install_monitor_fe() {
+ wget -O setup-monitor-fe.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-monitor-fe.sh"
+ chmod +x setup-monitor-fe.sh
+ ./setup-monitor-fe.sh
+}
+
 function install_monitor() {
  wget -O setup-monitor.sh "https://raw.githubusercontent.com/akile-network/akile_monitor/refs/heads/main/setup-monitor.sh"
  chmod +x setup-monitor.sh
@@ -64,6 +70,7 @@ while true; do
  echo "=================================================="
  echo "AkileCloud Monitor 管理脚本 Powered by KunBuFenZi"
  echo "=================================================="
+ echo "0.安装主控前端"
  echo "1.安装主控后端"
  echo "2.卸载主控后端"
  echo "3.查看主控config"
@@ -73,9 +80,10 @@ while true; do
  echo "7.退出"
  echo "============================================="
  
- read -p "Please select an option (1-7): " choice
+ read -p "Please select an option (0-7): " choice
  
  case $choice in
+     0) install_monitor_fe ;;
      1) install_monitor ;;
      2) uninstall_monitor ;;
      3) view_monitor_config ;;
