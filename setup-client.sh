@@ -5,26 +5,23 @@ if [ "$EUID" -ne 0 ]; then
  exit 1
 fi
 
+# Install bc based on system package manager
+if command -v apt-get > /dev/null; then
+    apt-get update && apt-get install -y bc
+elif command -v yum > /dev/null; then
+    yum update -y && yum install -y bc
+else
+    echo "Could not install bc. Please install it manually."
+    exit 1
+fi
+
 # Stop existing service if running
 systemctl stop ak_client
 
 # Function to detect main network interface
 get_main_interface() {
-   # 检查是否安装了bc命令
-   if ! command -v bc > /dev/null; then
-       echo "Installing bc..."
-       if command -v apt-get > /dev/null; then
-           apt-get update && apt-get install -y bc
-       elif command -v yum > /dev/null; then
-           yum update -y && yum install -y bc
-       else
-           echo "Could not install bc. Please install it manually."
-           exit 1
-       fi
-   fi
-
    local interfaces=$(ip -o link show | \
-       awk -F': ' '$2 !~ /^(lo|docker|veth|br-|virbr|tun|vnet|wg|vmbr|dummy|gre|sit|vlan|lxc|lxd|warp|tap)/{print $2}' | \
+       awk -F': ' '$2 !~ /^(lo|tap)/{print $2}' | \
        grep -v '@')
    
    local interface_count=$(echo "$interfaces" | wc -l)
