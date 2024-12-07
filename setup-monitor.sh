@@ -58,8 +58,8 @@ EOF
 
 # Get user input
 read -p "Enter auth_secret: " auth_secret
-read -p "Enter listen port (default :3000): " listen
-listen=${listen:-":3000"}
+read -p "Enter listen port (default 3000): " listen
+listen=${listen:-"3000"}
 read -p "Enter hook_token: " hook_token
 
 # Get enable_tg choice and related information
@@ -84,7 +84,7 @@ done
 cat > /etc/ak_monitor/config.json <<EOF
 {
   "auth_secret": "${auth_secret}",
-  "listen": "${listen}",
+  "listen": ":${listen}",
   "enable_tg": ${enable_tg},
   "tg_token": "${tg_token}",
   "hook_uri": "/hook",
