@@ -22,6 +22,8 @@ func startbot() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
+	setBotCommands(bot)
+
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 
@@ -150,6 +152,23 @@ CPU核心数： %d
 				sendOrEditServerStatus(bot, update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Message.MessageID, serverName)
 			}
 		}
+	}
+}
+
+// 设置命令列表
+func setBotCommands(bot *tgbotapi.BotAPI) {
+	commands := []tgbotapi.BotCommand{
+		{Command: "id", Description: "查看你的 Telegram 用户 ID"},
+		{Command: "akall", Description: "查看所有服务器的统计信息"},
+		{Command: "server", Description: "获取服务器列表"},
+		{Command: "status", Description: "查看某个服务器状态"},
+	}
+	// 创建命令配置
+	_, err := bot.Request(tgbotapi.NewSetMyCommands(commands...))
+	if err != nil {
+		log.Println("设置命令失败:", err)
+	} else {
+		log.Println("命令设置成功")
 	}
 }
 
