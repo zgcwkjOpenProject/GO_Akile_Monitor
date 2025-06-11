@@ -6,13 +6,14 @@ import (
 	"compress/gzip"
 	"context"
 	"fmt"
-	"github.com/cloudwego/hertz/pkg/common/json"
 	"io"
 	"log"
 	"regexp"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/cloudwego/hertz/pkg/common/json"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -174,7 +175,13 @@ func main() {
 	h.GET(cfg.WebUri, ws)
 	h.GET(cfg.HookUri, Hook)
 	h.POST("/delete", DeleteHost)
+	h.Static("/", cfg.Frontend)
+	h.GET("/", Index)
 	h.Spin()
+}
+
+func Index(_ context.Context, c *app.RequestContext) {
+	c.File(cfg.Frontend + "/index.html")
 }
 
 func Hook(_ context.Context, c *app.RequestContext) {
